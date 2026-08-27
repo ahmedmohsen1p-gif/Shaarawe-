@@ -1,72 +1,178 @@
-/* تشغيل الأغنية فور الضغط على الزر */
-    music.volume = 0.8;
-    music.play().catch(err => {
-        console.log("Audio play error:", err);
-    });
-
-    document.getElementById("login").style.display = "none";
-    document.getElementById("envelopeScreen").style.display = "flex";
-
-    document.getElementById("flapElem").classList.add("open-flap-anim");
-    document.getElementById("letterElem").classList.add("letter-up-anim");
-
-    setTimeout(() => {
-        document.getElementById("envelopeScreen").style.display = "none";
-        document.getElementById("main").style.display = "flex";
-        startTyping();
-        startPetals();
-    },3200);
-}
-
-openButton.addEventListener("click", openMessage);
-
-passwordInput.addEventListener("keydown", function(e){
-    if(e.key === "Enter"){
-        openMessage();
-    }
-});
-
-function startTyping(){
-    const textHolder = document.getElementById("textContent");
-    let i = 0;
-
-    function type(){
-        if(i >= messageText.length){
-            return;
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لقيت فيك كل بتمنى - كلمات الأغنية</title>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --accent-color: #f43f5e;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --border-color: #334155;
         }
 
-        const char = messageText[i];
-
-        if(char === "\n"){
-            textHolder.innerHTML += "<br>";
-        }else{
-            textHolder.appendChild(document.createTextNode(char));
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
-        i++;
-        setTimeout(type,50);
-    }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
 
-    type();
-}
+        .container {
+            width: 100%;
+            max-width: 650px;
+            background-color: var(--card-bg);
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+        }
 
-function startPetals(){
-    setInterval(() => {
-        const petal = document.createElement("div");
-        petal.className = "petal";
-        petal.style.left = Math.random() * 100 + "vw";
-        petal.style.width = (8 + Math.random() * 10) + "px";
-        petal.style.height = (5 + Math.random() * 6) + "px";
-        petal.style.animationDuration = (5 + Math.random() * 7) + "s";
-        document.body.appendChild(petal);
+        .header {
+            background: linear-gradient(135deg, #e11d48, #881337);
+            padding: 30px 20px;
+            text-align: center;
+        }
 
-        setTimeout(() => {
-            petal.remove();
-        },12000);
-    },250);
-}
+        .header h1 {
+            font-size: 2rem;
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
 
-</script>
+        .header p {
+            font-size: 1rem;
+            color: #fecdd3;
+        }
+
+        .lyrics-container {
+            padding: 30px 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .verse {
+            background-color: rgba(15, 23, 42, 0.6);
+            border-right: 4px solid var(--accent-color);
+            padding: 15px 20px;
+            border-radius: 8px;
+            transition: transform 0.2s ease, background-color 0.2s ease;
+        }
+
+        .verse:hover {
+            transform: translateX(-5px);
+            background-color: rgba(15, 23, 42, 0.9);
+        }
+
+        .verse-title {
+            font-size: 0.85rem;
+            color: var(--accent-color);
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .line {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--text-primary);
+        }
+
+        .chorus {
+            border-right-color: #fbbf24;
+            background-color: rgba(251, 191, 36, 0.05);
+        }
+
+        .chorus .verse-title {
+            color: #fbbf24;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 15px;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <h1>لقيت فيك كل بتمنى</h1>
+        <p>كلمات الأغنية</p>
+    </div>
+
+    <div class="lyrics-container">
+        
+        <!-- المقطع الأول -->
+        <div class="verse">
+            <div class="verse-title">المقطع الأول</div>
+            <div class="line">لقيت فيك كل بتمنى.. يا كل ما ليا في الدنيا</div>
+            <div class="line">وقلبي حبيبي مشتاق لك.. بحضنك ببقى حاجة تانية</div>
+            <div class="line">ولمسة حنينة منّك.. تغير لي الحياة والكون</div>
+        </div>
+
+        <!-- المقطع الثاني -->
+        <div class="verse">
+            <div class="verse-title">المقطع الثاني</div>
+            <div class="line">في عيني وقلبي أنا شايلك.. وأسيب الدنيا دي وأجيلك</div>
+            <div class="line">ولا يمكن في يوم أسيبك.. ده روحي تسيبني أسهل لي</div>
+            <div class="line">تعالى حبيبي قرب لي.. ده من غيرك لا أعيش ولا أكون</div>
+        </div><!-- الكوروس / القرار -->
+        <div class="verse chorus">
+            <div class="verse-title">القرار (الكوروس)</div>
+            <div class="line">في حضنك خليني أعيش لك.. عمري وسنيني</div>
+            <div class="line">وبتمنى تخبيني.. وجوة عينيك تنسيني.. الدنيا والأيام</div>
+            <div class="line">معاك ناسي كلامي.. وهواك غير لي أيامي</div>
+            <div class="line">ما بتشبعش حبيبي تاني.. وعن نفسك مش سالك</div>
+        </div>
+
+        <!-- المقطع الثالث -->
+        <div class="verse">
+            <div class="verse-title">المقطع الثالث</div>
+            <div class="line">سنين عايش وفرحي بعيد.. وجودك خلي فرحي يزيد</div>
+            <div class="line">وأنا جنبك بعيش فرحة.. ما يوصفهاش كلام أكيد</div>
+            <div class="line">وحبك ليا خلاني.. كأني ملكت قلب جديد</div>
+        </div>
+
+        <!-- المقطع الرابع -->
+        <div class="verse">
+            <div class="verse-title">المقطع الرابع</div>
+            <div class="line">حبيب قلبي بغني لك.. بطول العمر بدعي لك</div>
+            <div class="line">حياتي الجاية بهديلك.. يا كل ما ليا في الدنيا</div>
+            <div class="line">وأنا وياك بكون حاسس..</div>
+        </div>
+
+        <!-- إعادة القرار -->
+        <div class="verse chorus">
+            <div class="verse-title">القرار (إعادة)</div>
+            <div class="line">في حضنك خليني أعيش لك.. عمري وسنيني</div>
+            <div class="line">وبتمنى تخبيني.. وجوة عينيك تنسيني.. الدنيا والأيام</div>
+            <div class="line">معاك ناسي كلامي.. وهواك غير لي أيامي</div>
+            <div class="line">ما بتشبعش حبيبي تاني.. وعن نفسك مش سالك</div>
+        </div>
+
+    </div>
+
+    <div class="footer">
+        كلمات الأغنية
+    </div>
+</div>
 
 </body>
 </html>
